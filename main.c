@@ -1,50 +1,78 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct no
+#include <string.h>
+
+int cmpfunc (const void * a, const void * b)
 {
-    int info;
-    struct no *next;
-};
-typedef struct no* noptr;
-void push(noptr *lista, int x)
-{
-    noptr p;
-    p = (noptr)malloc(sizeof(struct no));
-    p->info = x;
-    if(lista == NULL)
-    {
-        p->next = NULL;
-    }
-    else
-        p->next = *lista;
-    *lista = p;
+   return ( *(int*)a - *(int*)b );
 }
+
+void quicksort(int *vetor,int tamanho,int i,int j)
+{
+    int trab,esq,dir,pivo;
+    esq = i;
+    dir = j;
+    pivo = vetor[(esq + dir)/2];
+    do
+    {
+        while(vetor[esq] < pivo)
+            esq++;
+        while(vetor[dir] > pivo)
+            dir--;
+        if (esq<=dir)
+        {
+            trab = vetor[esq];
+            vetor[esq] = vetor[dir];
+            vetor[dir] = trab;
+            esq++;
+            dir--;
+        }
+    }while (esq<=dir);
+
+    if (dir-i >=0)
+        quicksort(vetor,tamanho,i,dir);
+    if (j-esq >=0)
+        quicksort(vetor,tamanho,esq,j);
+
+}
+
 int main()
 {
-    noptr lista = NULL;
-    noptr p;
-    int x;
+    int tam = 8;
+    int i;
+    int vetor[tam];
 
-    puts("Entre com os elementos da lista: -1 para sair \n");
-    scanf("%d", &x);
-    if(x == -1)
-    {
-        return -1;
-    }
-    else
-    {
-        push(&lista,x);
-    }
-    while(x != -1)
-    {
-        puts("Entre com os elementos da lista: -1 para sair \n");
-        scanf("%d",&x);
-        push(&lista,x);
-    }
-    for(p = lista; p != NULL; p=p->next)
-    {
-        printf("A lista e: \n");
-        printf("%d\n", p->info);
-    }
-    return 0;
+    char nomes[10][100];
+    int tamanho = 5;
+    char j;
+
+    strcmp(nomes[0],"Monalisa");
+    strcmp(nomes[1],"Thais");
+    strcmp(nomes[3],"Maria");
+    strcmp(nomes[3],"Mona");
+
+    qsort(nomes,5,sizeof(nomes[0]),cmpfunc);
+
+    for(j = nomes[];)
+
+    for(i = 0;i<tam;i++)
+    {
+        vetor[i] = rand() %10000+1; //gera uma vetor com numeros aleatorios
+        printf("%d\n",vetor[i]); // mostra o vetor antes
+    }
+
+    quicksort(vetor,tam,0,8); //chama a função quicksort
+
+    for(i = 0; i<tam;i++)
+    {
+        printf("%d\n", vetor[i]); // mostra o vetor ordenado
+    }
+
+    qsort(vetor,9,sizeof(int),cmpfunc);
+
+
+    printf("\n");
+
+    printf("Hello world!\n");
+    return 0;
 }
